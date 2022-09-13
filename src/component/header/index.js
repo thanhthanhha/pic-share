@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { Link as ReachRouterLink } from 'react-router-dom';
+import {Logo, Background, Link, Container, Icon, Group, Profile, Dropdown, Textlink, ButtonLink } from './style/header'
 
 
-export default function Header({bg = true, children, ...restProps}) {
+export default function Header({bg = true, dontShowOnSmallViewPort = false, children, ...restProps}) {
     return bg ? (
         <Background {...restProps}>
-            children
+            {children}
         </Background>
     ) : (
         children
@@ -24,6 +25,15 @@ Header.Icon = function HeaderIcon({to , ...restProps}) {
         );
 }
 
+Header.Logo = function HeaderLogo({to, ...restProps}) {
+    return (
+    <Link to={to}>
+        <Logo {...restProps}/>
+    </Link>
+    );
+}
+
+
 Header.Group = function HeaderGroup({children, ...restProps}) {
     return <Group {...restProps}> {children} </Group>
 }
@@ -40,6 +50,11 @@ Header.Textlink = function HeaderTextlink({children, ...restProps}) {
     return <Textlink {...restProps}> {children} </Textlink>
 }
 
+Header.UrlLink = function HeaderLink({children, ...restProps}) {
+    return (
+    <Link {...restProps}>  {children}</Link>
+    )
+}
 Header.ButtonLink = function HeaderButtonLink({children, ...restProps}) {
     return <ButtonLink {...restProps}> {children} </ButtonLink>
 }
