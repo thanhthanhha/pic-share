@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link as ReachRouterLink } from 'react-router-dom';
-import {Logo, Background, Link, Container, Icon, Group, Profile, Dropdown, Textlink, ButtonLink } from './style/header'
+import {Logo, Background, Link, Container, Icon, Group, Profile, Dropdown, Textlink, ButtonLink, Account } from './style/header'
 
 
 export default function Header({bg = true, dontShowOnSmallViewPort = false, children, ...restProps}) {
@@ -40,6 +40,10 @@ Header.Group = function HeaderGroup({children, ...restProps}) {
 
 Header.Profile = function HeaderProfile({children, ...restProps}) {
     return <Profile {...restProps}> {children} </Profile>
+}
+
+Header.Account = function HeaderAccount({children, ...restProps}) {
+    return <Account {...restProps}> {children} </Account>
 }
 
 Header.Dropdown = function HeaderDropdown({children, ...restProps}) {

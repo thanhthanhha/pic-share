@@ -4,7 +4,9 @@ import * as ROUTES from '../config/router';
 import logo from '../logo.png';
 import newlogo from '../logo.svg';
 
-export default function HeadCon({children, ...restProps}) {
+export default function HeadCon({children, ButtonOption, ...restProps}) {
+    
+
     return (
         <Header>
             <Header.Frame>
@@ -25,8 +27,7 @@ export default function HeadCon({children, ...restProps}) {
                     </Header.Dropdown>
                 </Header.Profile>
                 </Header.Group>
-                <Header.ButtonLink to={ROUTES.SIGN_IN}>Sign In</Header.ButtonLink>
-                
+                {ButtonOption ? <Header.ButtonLink to={ROUTES.SIGN_UP}>Sign Up</Header.ButtonLink> : <Header.ButtonLink to={ROUTES.SIGN_IN}>Sign In</Header.ButtonLink>}
             </Header.Frame>
             {children}
         </Header>

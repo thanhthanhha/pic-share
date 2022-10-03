@@ -4,31 +4,34 @@ import { useNavigate } from 'react-router-dom';
 import { Form } from '../component';
 import * as ROUTES from '../config/router';
 import HeadCon from "../containers/newheader";
+import useAuth from '../helpers/useAuth';
 
 export default function SignIn() {
     const history = useNavigate();
-    const [emailAddress, setEmailAddress] = useState('');
+    const {login, loading, error, isLogin} = useAuth();
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
+    let payload;
   
-    const isInvalid = password === '' || emailAddress === '';
+    const isInvalid = password === '' || username === '';
   
-    const handleSignin = (event) => {
+    const handleSignin = async (event) => {
       event.preventDefault();
-      history(ROUTES.BROWSE);
+      
+      login(username, password);
     }
     return (
         <>
-        <HeadCon>
+        <HeadCon ButtonOption={true} >
           <Form>
             <Form.Title>Sign In</Form.Title>
             {error && <Form.Error data-testid="error">{error}</Form.Error>}
   
             <Form.Base onSubmit={handleSignin} method="POST">
               <Form.Input
-                placeholder="Email address"
-                value={emailAddress}
-                onChange={({ target }) => setEmailAddress(target.value)}
+                placeholder="Username"
+                value={username}
+                onChange={({ target }) => setUsername(target.value)}
               />
               <Form.Input
                 type="password"

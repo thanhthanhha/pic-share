@@ -120,6 +120,25 @@ export const Profile = styled.div`
       }
 `;
 
+export const Account = styled.div`
+      display:flex;
+      align-items: flex-end;
+      margin-left: 20px;
+      position: relative;
+    
+      button {
+        cursor: pointer;
+      }
+      &:hover > ${Dropdown} {
+        display: flex;
+        flex-direction: column;
+      }
+
+      &:hover > ${Link} {
+        font-weight: bold;
+      }
+`;
+
 export const Icon = styled.img`
 height: 40px;
 width: 60px;
@@ -152,7 +171,7 @@ to {
 export const ButtonLink = styled(ReactRouterLink)`
   display: block;
   background: #900;
-  width: 84px;
+  width: 90px;
   height: fit-content;
   color: white;
   border: 0;
