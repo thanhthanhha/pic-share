@@ -74,8 +74,20 @@ export const Input = styled.input`
   }
 `;
 
+export const SingleInput = styled.input`
+  background: #333;
+  border-radius: 4px;
+  border: 0;
+  color: #fff;
+  height: 50px;
+  line-height: 20px;
+  padding: 5px 20px;
+  text-align: left;
+  padding-top: 12px;
+`;
+
 export const Submit = styled.button`
-  background: #e50914;
+  background: #900;
   border-radius: 4px;
   font-size: 16px;
   font-weight: bold;

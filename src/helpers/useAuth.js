@@ -10,21 +10,17 @@ export function AuthProvider({ children }) {
     const [error, setError] = useState();
     const [loading, setLoading] = useState(false);
     const [isLogin, setisLogin] = useState(false);
+    const [loadInit, setloadInit] = useState(false);
 
     const location = useLocation();
     const history = useNavigate();
 
     useEffect(() => {
-        if (error) setError(null);
- 
-      }, [location.pathname]);
-
-    useEffect(() => {
         if (user) localStorage.setItem('user',user.username);
-        
     },[user])
 
     useEffect(() => {
+        if (error) setError(null);
         let token = localStorage.getItem('token');
         async function verifyLogin() {
             setLoading(true);
@@ -39,7 +35,7 @@ export function AuthProvider({ children }) {
                 if (res.data.username && res.data.token) {
                     setUser({...res.data}); 
                 }
-                console.log(res.data.username);
+         
                 localStorage.setItem('user',res.data.username);
                 setisLogin(true);
             })
@@ -49,10 +45,15 @@ export function AuthProvider({ children }) {
                 setUser(null);
                 setisLogin(false);
             })
-            .finally(() => setLoading(false));
+            .finally(() => {
+                setLoading(false);
+ 
+            });
         }
         if (token) {
         verifyLogin();
+        } else {
+        setloadInit(true);
         }
     },[location.pathname]);
 
@@ -60,6 +61,7 @@ export function AuthProvider({ children }) {
         localStorage.removeItem('token');
         setisLogin(false);
         setUser(null);
+        history("/signin");
     }
 
     const signUp = async (email, username, password) => {
@@ -94,7 +96,10 @@ export function AuthProvider({ children }) {
             setUser(null);
             setisLogin(false);
         })
-        .finally(() => setLoading(false));
+        .finally(() => {
+            setloadInit(true);
+            setLoading(false);
+        });
     }
 
     const login = async (username, password) => {
@@ -114,7 +119,6 @@ export function AuthProvider({ children }) {
                 setUser({...res.data});
                 localStorage.setItem('token', res.data.token);
                 localStorage.setItem('user',res.username);
-                console.log("redirect");
                 setisLogin(true);
                 history("/browse");
             } else {
@@ -127,7 +131,10 @@ export function AuthProvider({ children }) {
             setUser(null);
             setisLogin(false);
         })
-        .finally(() => setLoading(false));
+        .finally(() => {
+            setloadInit(true);
+            setLoading(false);
+        });
     }
 
 
@@ -136,11 +143,13 @@ export function AuthProvider({ children }) {
         error,
         loading,
         isLogin,
+        loadInit,
+        setLoading,
         login,
         signUp,
         logout
     }),
-    [user, loading, error, isLogin])
+    [user, loading, error, isLogin, loadInit])
 
     return (
         <AuthContext.Provider value = {memoedVal}>

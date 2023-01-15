@@ -1,11 +1,12 @@
 import React,{useEffect} from 'react';
 import { Route, Navigate, useLocation, Outlet} from 'react-router-dom';
 import useAuth from './useAuth';
+import Loading from '../containers/loading';
 
 
 export function UserRedirect({ isLogin, loggedInPath, children, ...rest }) {
 
-  console.log(`user redirect ${isLogin}`);
+
   if (!isLogin) {
      return children;
    }
@@ -27,7 +28,7 @@ export function UserRedirect({ isLogin, loggedInPath, children, ...rest }) {
 
 export function Protected({ isLogin, children, ...rest }) {
         const location = useLocation();
-        console.log(`protect ${isLogin}`);
+
         if (isLogin) {
           return children;
         }
@@ -43,21 +44,21 @@ export function Protected({ isLogin, children, ...rest }) {
         }
 }
 
-export const RequireAuth = ({isLogin,loading,children,...rest}) => {
+export const RequireAuth = ({isLogin,loading,loadInit,children,...rest}) => {
   const location = useLocation();
-  console.log(`loading ${loading} and login ${isLogin}`);
 
-  if (loading) {
+
+  if ((loading || !loadInit) && !isLogin) {
     return (
-      <div>Loading...</div>
+      <Loading/>
     )
   }
 
   if(isLogin) {
-    return children;
+    return <Outlet />;
   }
 
-  if (!isLogin) {
+  if (!isLogin && loadInit) {
     return (
       <Navigate
         to={{ pathname: "/unauthorized", state: { from: location } }}
@@ -66,5 +67,5 @@ export const RequireAuth = ({isLogin,loading,children,...rest}) => {
     );
   }
 
-  return null;
+  return <Loading/>;
 };

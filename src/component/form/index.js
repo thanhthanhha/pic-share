@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Error, Base, Title, Text, TextSmall, Link, Input, Submit } from './styles/form';
+import { Container, Error, Base, Title, Text, TextSmall, Link, Input, Submit, SingleInput } from './styles/form';
 
 export default function Form({ children, ...restProps }) {
     return <Container {...restProps}>{children}</Container>;
@@ -31,6 +31,11 @@ export default function Form({ children, ...restProps }) {
   
   Form.Input = function FormInput({ children, ...restProps }) {
     return <Input {...restProps}>{children}</Input>;
+  };
+
+  Form.SingleInput = function FormSingleInput({ children, ...restProps }) {
+    console.log("single input")
+    return <SingleInput {...restProps}>{children}</SingleInput>;
   };
   
   Form.Submit = function FormSubmit({ children, ...restProps }) {

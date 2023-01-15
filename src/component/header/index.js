@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link as ReachRouterLink } from 'react-router-dom';
-import {Logo, Background, Link, Container, Icon, Group, Profile, Dropdown, Textlink, ButtonLink, Account } from './style/header'
+import {Logo, Background, Link, Container, Icon, Group, Profile, Dropdown, Textlink, ButtonLink, Account, User, UserImg, DropdownGroup, TextAccLink } from './style/header'
 
 
 export default function Header({bg = true, dontShowOnSmallViewPort = false, children, ...restProps}) {
@@ -38,6 +38,8 @@ Header.Group = function HeaderGroup({children, ...restProps}) {
     return <Group {...restProps}> {children} </Group>
 }
 
+
+
 Header.Profile = function HeaderProfile({children, ...restProps}) {
     return <Profile {...restProps}> {children} </Profile>
 }
@@ -60,5 +62,21 @@ Header.UrlLink = function HeaderLink({children, ...restProps}) {
     )
 }
 Header.ButtonLink = function HeaderButtonLink({children, ...restProps}) {
-    return <ButtonLink {...restProps}> {children} </ButtonLink>
+    return <ButtonLink {...restProps}>{children}</ButtonLink>
+}
+
+Header.User = function HeaderUser({children, ...restProps}) {
+    return <User {...restProps}>{children}</User>
+}
+
+Header.UserImg = function HeaderUserImg({children, ...restProps}) {
+    return <UserImg {...restProps}>{children}</UserImg>
+}
+
+Header.DropdownGroup = function HeaderDropdownGroup({children, ...restProps}) {
+    return <DropdownGroup {...restProps}>{children}</DropdownGroup>
+}
+
+Header.TextAccLink = function HeaderTextAccLink({children, ...restProps}) {
+    return <TextAccLink {...restProps}>{children}</TextAccLink>
 }
