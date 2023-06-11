@@ -15,6 +15,8 @@ export function AuthProvider({ children }) {
     const location = useLocation();
     const history = useNavigate();
 
+
+
     useEffect(() => {
         if (user) localStorage.setItem('user',user.username);
     },[user])
@@ -43,6 +45,7 @@ export function AuthProvider({ children }) {
                 setError(error);
                 localStorage.removeItem('token');
                 setUser(null);
+                console.log("trigger null 2");
                 setisLogin(false);
             })
             .finally(() => {
@@ -61,6 +64,7 @@ export function AuthProvider({ children }) {
         localStorage.removeItem('token');
         setisLogin(false);
         setUser(null);
+        console.log("trigger null 1");
         history("/signin");
     }
 
@@ -81,10 +85,12 @@ export function AuthProvider({ children }) {
 
             if (res.data.username && res.data.token) {
                 setUser({...res.data});
+
                 localStorage.setItem('token', res.data.token);
-                localStorage.setItem('user',res.username);
+                localStorage.setItem('user',res.data.username);
+                localStorage.setItem('image',JSON.stringify(res.data.img));
                 setisLogin(true);
-                history("/browse");
+                history("/browse")
             } else {
                 throw Promise.reject('token or username not valid check network tab for request payload');
             }
@@ -93,7 +99,6 @@ export function AuthProvider({ children }) {
         .catch((error) => {
             let txterr = !error.message ? JSON.stringify(error) : error.message;
             setError(txterr);
-            setUser(null);
             setisLogin(false);
         })
         .finally(() => {
@@ -116,9 +121,13 @@ export function AuthProvider({ children }) {
         })
         .then((res) => {
             if (res.data.username && res.data.token) {
+                console.log(res.data);
+                console.log(`checking user name ${res.data.username}`);
                 setUser({...res.data});
                 localStorage.setItem('token', res.data.token);
                 localStorage.setItem('user',res.username);
+                localStorage.setItem('image',JSON.stringify(res.data.img));
+                console.log(user)
                 setisLogin(true);
                 history("/browse");
             } else {
@@ -128,7 +137,6 @@ export function AuthProvider({ children }) {
         .catch((error) => {
             let txterr = !error.message ? JSON.stringify(error) : error.message;
             setError(txterr);
-            setUser(null);
             setisLogin(false);
         })
         .finally(() => {

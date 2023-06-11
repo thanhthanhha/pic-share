@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Header } from '../component';
 import * as ROUTES from '../config/router';
 import logo from '../logo.png';
@@ -14,12 +14,16 @@ window.Buffer = window.Buffer || require("buffer").Buffer;
 export default function HeadCon({children, ButtonOption, ...restProps}) {
     const {logout, loading, error, isLogin, user} = useAuth();
     const history = useNavigate()
-
-    const SignOut = () => {
-        console.log("sign");
-    };
-    const username = localStorage.getItem('user');
     
+    let username = localStorage.getItem('user');
+    let image = localStorage.getItem('image');
+    image = JSON.parse(image)
+    console.log(user)
+
+    useEffect(()=> {
+        username = user?.username || username
+        image = user?.img.data ?  user?.img :  image
+    },[user])
 
 
     return (
@@ -37,7 +41,15 @@ export default function HeadCon({children, ButtonOption, ...restProps}) {
                 <Header.Group Width="25px">
                     {username ? <Header.Account>
                         <Header.UserImg>
-                                {user?.img ? <Header.User src={`data:${user.img.contentType};base64,${window.Buffer.from(user.img.data.data).toString('base64')}`}/> : <Icon.User size={28}/>}
+                                {
+                                    image?.data ? (
+                                        <Header.User
+                                        src={`data:${image.contentType};base64,${window.Buffer.from(
+                                            image.data
+                                        ).toString('base64')}`}
+                                        />
+                                    ) : (<Icon.User size={28} />)
+                                }
                         </Header.UserImg>
                         <Header.TextAccLink>{username}</Header.TextAccLink>
                         <Header.Dropdown Right="0%">
