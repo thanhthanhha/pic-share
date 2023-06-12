@@ -22,5 +22,10 @@ Signin and view all the Stories we got for you!
 
 To use the application, you can register a new user account or login with an existing account. Once you are logged in, you can view all the stories we got
 
+##Containerized
+
+We can deploy the whole stack on containter Docker using
+https://github.com/thanhthanhha/story-blog
+
 
 
